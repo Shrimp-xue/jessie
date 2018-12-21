@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/tx
+       http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <!-- 配置spring的事务
+            mybatis使用的spring jdbc 中的事务管理器
+
+         配置一个事务管理器
+         配置事务增强
+         配置aop切面 注意：依赖aspectj weacer
+
+    -->
+
+    <bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <!-- 这里会有警告说，ref dataSource 找不到，没有关系
+                因为我们这里引用的是applocationContext dao文件中配置的数据源
+        -->
+        <property name="dataSource" ref="dataSource"></property>
+    </bean>
+
+    <tx:advice id="txAdvice" transaction-manager="txManager">
+        <tx:attributes>
+            <!-- 定义事务传播规则-->
+            <tx:method name="save*" propagation="REQUIRED"/>
+            <tx:method name="add*" propagation="REQUIRED"/>
+            <tx:method name="update*" propagation="REQUIRED"/>
+            <tx:method name="delete*" propagation="REQUIRED"/>
+            <tx:method name="remove*" propagation="REQUIRED"/>
+            <tx:method name="get*" propagation="SUPPORTS"/>
+            <tx:method name="list*" propagation="SUPPORTS"/>
+            <tx:method name="find*" propagation="SUPPORTS"/>
+            <tx:method name="query*" propagation="SUPPORTS"/>
+        </tx:attributes>
+    </tx:advice>
+
+    <!--
+        proxy-target-class="false" 表示使用JDK动态代理，基于接口（默认的）
+        proxy-target-class="true"  表示使用cglib动态代理，基于类
+    -->
+    <aop:config proxy-target-class="false">
+        <aop:advisor advice-ref="txAdvice" pointcut="execution(* com.jessie.service.*.*(..))"/>
+    </aop:config>
+</beans>

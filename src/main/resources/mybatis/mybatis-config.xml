@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <!-- 配置全局属性 -->
+    <settings>
+        <!-- 配置日志 -->
+        <setting name="logImpl" value="LOG4J"/>
+
+        <!-- 开启懒加载 -->
+        <setting name="lazyLoadingEnabled" value="true"/>
+
+        <!-- 不积极加载 -->
+        <setting name="aggressiveLazyLoading" value="false"/>
+
+        <!-- 触发懒加载的方法 -->
+        <setting name="lazyLoadTriggerMethods" value="clone"/>
+
+    </settings>
+
+    <!-- 设置别名 -->
+    <typeAliases>
+        <package name="com.jessie.model"/>
+    </typeAliases>
+</configuration>
