@@ -11,7 +11,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * List工具类
- * @author ThinkGem
+ * @author shrimp
  * @version 2015-1-23
  */
 @SuppressWarnings("rawtypes")
